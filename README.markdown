@@ -7,17 +7,20 @@ It is a middleware-type tool intended for use with [node-http-proxy](https://git
 Example
 =======
 
-    var http = require('http')
-      , proxy = require('http-proxy')
+    var http    = require('http')
+      , proxy   = require('http-proxy')
       , gremlin = require('proxy-gremlin')
 
     http.createServer(function(req, res) { // start an http server
 
-      // tell proxy-gremlin to buffer the response
-      var buffer = new gremlin.Buffer(res)
+      // Proxy the request
+      proxy.proxyRequest(req, res, {
+        host: proxiedHost, // put your proxied host here
+        port: proxiedPort  // put your proxied port here
+      })
 
-      // set up a listener for when the proxied response is ready
-      res.on('end', function() {
+      // tell proxy-gremlin to intercept this response before it goes out
+      gremlin.intercept(res, function interceptor(buffer) {
 
         // log buffered response info
         console.log(buffer.headers)
@@ -28,13 +31,6 @@ Example
         // change the response
         buffer.headers['Content-Type'] = 'text/html' // change a header
         buffer.setData('Hello world')                // change the response's data
-        buffer.send()                                // send the response
-      })
-
-      // Proxy the request
-      proxy.proxyRequest(req, res, {
-        host: proxiedHost, // put your proxied info here
-        port: proxiedPort  // put your proxied port here
       })
 
     }).listen(8080)

@@ -10,11 +10,6 @@ function Buffer(res) {
   self.headers = {}
   self._chunks = []
 
-  // Monkey patch the response.
-  self._end = res.end
-  self._write = res.write
-  self._writeHead = res.writeHead
-
   // Helper function for saving written chunks.
   function write(chunk, encoding) {
 
@@ -60,12 +55,22 @@ Buffer.prototype.setData = function setData(data) {
   this._data = data
 }
 
-// Since Buffer intercepts res.end,
-// send provides a way for the user to send the response to the client.
-Buffer.prototype.send = function send() {
+exports.intercept = function(res, interceptor) {
 
-  this._writeHead.call(this.res, this._statusCode, this.headers)
-  this._end.call(this.res, this.getData(), this.encoding)
+  // save the original response method
+  var end       = res.end
+    , writeHead = res.writeHead
+
+  // Buffer monkey patches the response
+  var buffer = new Buffer(res)
+
+  res.on('end', function onResEnd() {
+
+    // apply outgoing transformations on the buffered response
+    interceptor(buffer)
+
+    // send the response to the client
+    writeHead.call(res, buffer.statusCode, buffer.headers)
+    end.call(res, buffer.getData(), buffer.encoding)
+  }
 }
-
-exports.Buffer = Buffer
