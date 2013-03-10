@@ -19,10 +19,13 @@ Example
       // set up a listener for when the proxied response is ready
       res.on('end', function() {
 
-        console.log(buffer.headers)                  // log the headers
-        console.log(buffer.encoding)                 // log the specified encoding
-        console.log(buffer.getData())                // log buffered data
+        // log buffered response info
+        console.log(buffer.headers)
+        console.log(buffer.encoding)
+        console.log(buffer.statusCode)
+        console.log(buffer.getData())
 
+        // change the response
         buffer.headers['Content-Type'] = 'text/html' // change a header
         buffer.setData('Hello world')                // change the response's data
         buffer.send()                                // send the response
@@ -30,8 +33,8 @@ Example
 
       // Proxy the request
       proxy.proxyRequest(req, res, {
-        host: proxiedHost,
-        port: proxiedPort
+        host: proxiedHost, // put your proxied info here
+        port: proxiedPort  // put your proxied port here
       })
 
     }).listen(8080)

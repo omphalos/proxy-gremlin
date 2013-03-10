@@ -6,7 +6,7 @@ function Buffer(res) {
 
   self.res = res
 
-  // Incoming data is stored in headers and _chunks.
+  // Incoming data is stored in headers, _chunks, as well as statusCode and encoding
   self.headers = {}
   self._chunks = []
 
@@ -26,7 +26,7 @@ function Buffer(res) {
   res.writeHead = function(statusCode, headers) {
 
     self.headers = headers
-    self._statusCode = statusCode
+    self.statusCode = statusCode
 
     res.emit('writeHead', headers, statusCode)
   }
