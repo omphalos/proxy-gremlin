@@ -72,5 +72,5 @@ exports.intercept = function(res, interceptor) {
     // send the response to the client
     writeHead.call(res, buffer.statusCode, buffer.headers)
     end.call(res, buffer.getData(), buffer.encoding)
-  }
+  })
 }

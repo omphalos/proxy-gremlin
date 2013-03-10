@@ -1,6 +1,6 @@
 {
   "name": "proxy-gremlin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "omphalos",
   "description": "Utility to assist in changing proxied requests.",
   "contributors": [
