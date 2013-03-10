@@ -55,22 +55,22 @@ Buffer.prototype.setData = function setData(data) {
   this._data = data
 }
 
-exports.intercept = function(res, interceptor) {
+exports.intercept = function intercept(res, interceptor) {
 
-  // save the original response method
+  // Save the original response method;
+  // buffer will monkey patch the response.
   var end       = res.end
     , writeHead = res.writeHead
-
-  // Buffer monkey patches the response
-  var buffer = new Buffer(res)
+    , buffer    = new Buffer(res)
 
   res.on('end', function onResEnd() {
 
-    // apply outgoing transformations on the buffered response
+    // Apply outgoing transformations on the buffered response.
     interceptor(buffer)
 
-    // send the response to the client
+    // Send the response to the client.
     writeHead.call(res, buffer.statusCode, buffer.headers)
     end.call(res, buffer.getData(), buffer.encoding)
   })
 }
+
