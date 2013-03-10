@@ -1,0 +1,27 @@
+{
+  "name": "proxy-gremlin",
+  "version": "0.1.0",
+  "author": "omphalos",
+  "description": "Utility to assist in changing proxied requests.",
+  "contributors": [
+    {
+      "name": "omphalos"
+    }
+  ],
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omphalos/proxy-gremlin.git"
+  },
+  "keywords": [
+    "intercept",
+    "middleware",
+    "node-http-proxy",
+    "reverse",
+    "tamper"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8"
+  }
+}
