@@ -1,8 +1,8 @@
 Proxy Gremlin
 =============
 
-Proxy Gremlin is a tiny middleware library that helps you to intercept and alter proxied responses.
-It is a middleware tool intended for use with [node-http-proxy](https://github.com/nodejitsu/node-http-proxy).
+Proxy Gremlin is a tiny library that helps you to intercept and alter proxied responses.
+It is a middleware-type tool intended for use with [node-http-proxy](https://github.com/nodejitsu/node-http-proxy).
 
 Example
 =======
